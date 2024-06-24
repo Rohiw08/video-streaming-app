@@ -17,11 +17,11 @@ const uploadOnCloudinary = async (localFilePath) => {
     console.log("file uploaded successfully", response.url);
     return response;
   } catch (error) {
-    FileSystem.unlink(localFilePath)
+    FileSystem.unlink(localFilePath);
     console.log(error.message);
     return null;
   }
 };
 
-export default uploadOnCloudinary;
+export { uploadOnCloudinary };
 

@@ -1,24 +1,24 @@
 const asyncHandler = (requesthandler) => {
-    async (req, res, next) => {
+    return async (req, res, next) => {
         try {
-            await requesthandler.call(req, res, next);
+            await requesthandler(req, res, next);
         } catch (error) {
-            res.status(err.code || 500).json({
+            res.status(error.statusCode || 500).json({
                 success: false,
-                message : error.message    
+                message : error.message
             });
         }
     };
 }
 
-/*
-    const asyncHandler = (requesthandler) => {
-        (req, res, next) => {
-            promise
-            .resolve(requesthandler(req, res, next))
-            .catch((err) => next(err));
-        }
-*/
+
+    // const asyncHandler = (requesthandler) => {
+    //     return (req, res, next) => {
+    //         promise
+    //         .resolve(requesthandler(req, res, next))
+    //         .catch((err) => next(err));
+    //     }
+    // }
 
 
-export {asyncHandler}
+export { asyncHandler }

@@ -1,9 +1,10 @@
 import cors from 'cors'
-import exxpress from 'express';
+import cookieParser from 'cookie-parser';
+import express from 'express';
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: '*',
     credentials: true,
     optionSuccessStatus: 200,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -28,3 +29,16 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 app.use(express.static("public"));
+
+// routes
+import userRouter from './routes/user.routes.js';
+
+// routes declaration
+app.use("/users", userRouter);
+// http://localhost:XXXX/api/v1/users/register or /login
+
+app.get('/', (req, res) => {
+    res.send('Hello World again');
+})
+
+export {app}

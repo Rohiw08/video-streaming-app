@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+// import Video from './video.model.js'
 
-const userSchema = new mongoose.Schema({
-    userName : {
+const userSchema = new Schema({
+    username : {
         type : String,
         required : true,
         unique : true,
@@ -14,13 +18,13 @@ const userSchema = new mongoose.Schema({
         required : true,
         unique : true,
         trim : true,
-        validate: {
-            validator: function(email) {
-                const re = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-                return re.test(String(email).toLowerCase());
-            },
-            message: "Please enter a valid email address"
-        }
+        // validate: {
+        //     validator: function(email) {
+        //         const re = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+        //         return re.test(String(email).toLowerCase());
+        //     },
+        //     message: "Please enter a valid email address"
+        // }
     },
     password : {
         type : String,
@@ -43,12 +47,10 @@ const userSchema = new mongoose.Schema({
     },
     watchHistory : {
         type : Schema.Types.ObjectId,
-        ref : 'Video',
-        default : []
+        ref : "Video",
     },
     refreshToken : {
         type : String,
-        required : true,
     }
 }, {timestmps: true});
 
@@ -76,7 +78,7 @@ userSchema.methods.generateaccessToken = async function (){
         expiresIN : process.env.ACCESS_TOKEN_EXPIRY,
     }
 }
-userSchema.methods.generateRefreshToken = async function (){
+userSchema.methods.generateRefreshToken = async function () {
     return await jwt.sign({
         _id : this._id,
     }),
@@ -85,6 +87,5 @@ userSchema.methods.generateRefreshToken = async function (){
         expiresIN : process.env.REFRESH_TOKEN_EXPIRY,
     }
 }
-
-
-export default User = mongoose.model('User' , userSchema);
+const User = mongoose.model('User' , userSchema);
+export { User };
