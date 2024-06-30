@@ -1,4 +1,4 @@
-import { DB_NAME } from '../constants.js';
+import { DB_NAME } from '../../constants.js';
 
 import 'dotenv/config'
 import mongoose from'mongoose';

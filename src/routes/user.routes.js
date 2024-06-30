@@ -15,7 +15,6 @@ import {
 } from "../controllers/user.controller.js";
 import multerMiddleware from '../middlewares/multer.middleware.js';
 
-
 const router = new Router();
 
 router.route("/register").post(
@@ -28,7 +27,7 @@ router.route("/register").post(
 router.route("/login").post(loginUser)
 
 //secured routes
-router.route("/logout").post(verifyJWT,  logoutUser)
+router.route("/logout").post(verifyJWT, logoutUser)
 router.route("/refresh-token").post(refreshAccessToken)
 router.route("/change-password").post(verifyJWT, changeCurrentPassword)
 router.route("/current-user").get(verifyJWT, getCurrentUser)

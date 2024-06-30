@@ -2,12 +2,14 @@ import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
 import { User } from "../models/user.model.js";
+import 'dotenv/config'
 
 const verifyJWT = asyncHandler(async(req, _, next) => {
     try {
+        // console.table([process.env.REFRESH_TOKEN_SECRET, process.env.REFRESH_TOKEN_EXPIRY, process.env.ACCESS_TOKEN_SECRET, process.env.ACCESS_TOKEN_EXPIRY])
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
         
-        // console.log(token);
+        console.log(token);
         if (!token) {
             throw new ApiError(401, "Unauthorized request")
         }
